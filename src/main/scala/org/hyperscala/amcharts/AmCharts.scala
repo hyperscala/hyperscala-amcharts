@@ -11,7 +11,7 @@ import org.hyperscala.web.{Website, Webpage}
  *
  * @author Matt Hicks <matt@outr.com>
  */
-object Amcharts extends Module {
+object AmCharts extends Module {
   val name = "amcharts"
   val version = Version(3, 4, 10)
 
