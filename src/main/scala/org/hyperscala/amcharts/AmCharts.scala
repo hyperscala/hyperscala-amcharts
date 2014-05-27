@@ -24,6 +24,7 @@ object AmCharts extends Module {
   }
 
   def verifyPie[S <: Session](webpage: Webpage[S]) = verifyScript(webpage, "pie")
+  def verifySerial[S <: Session](webpage: Webpage[S]) = verifyScript(webpage, "serial")
 
   private def verifyScript[S <: Session](webpage: Webpage[S], name: String) = if (!hasScript(webpage, name)) {
     webpage.head.contents += new tag.Script(src = s"/amcharts/$name.js")

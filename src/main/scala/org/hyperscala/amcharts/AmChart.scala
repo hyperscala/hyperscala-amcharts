@@ -136,6 +136,7 @@ trait AmChart[D] extends WrappedComponent[tag.Div] {
     val id = wrapped.identity
     b.append(s"$$('#$id').data('chart', chart);\r\n")
     b.append(s"""chart.write("$id");\r\n""")
+    println(s"Sending: $b")
     Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(id)))
   }
 

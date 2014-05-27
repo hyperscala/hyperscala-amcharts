@@ -13,7 +13,6 @@ import org.powerscala.Color
 class PieSimplePage extends Webpage(AmChartsExampleSite) {
   require(Realtime)
   require(AmCharts)
-  AmCharts.verifyPie(this)
 
   val chartDiv = new tag.Div(id = "chartdiv") {
     style.width := 100.pct

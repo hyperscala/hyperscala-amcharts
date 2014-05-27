@@ -23,4 +23,10 @@ class AmPieChart[D](val wrapped: tag.Div)(implicit val manifest: Manifest[D]) ex
   lazy val radius = property[String]("radius", null)
   lazy val startAngle = property[Double]("startAngle", 90.0)
   lazy val startRadius = property[String]("startRadius", "500%")
+
+  override protected def initializeComponent(values: Map[String, Any]) = {
+    AmCharts.verifyPie(webpage)
+
+    super.initializeComponent(values)
+  }
 }

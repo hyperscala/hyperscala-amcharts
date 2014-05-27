@@ -10,6 +10,7 @@ import com.outr.net.http.request.HttpRequest
  */
 object AmChartsExampleSite extends Website[MapSession] with JettyApplication {
   val pieSimple = page(new PieSimplePage, Scope.Page, "/pieSimple.html")
+  val lineSimple = page(new LineSimplePage, Scope.Page, "/lineSimple.html")
 
   override protected def createSession(request: HttpRequest, id: String) = new MapSession(id, this)
 

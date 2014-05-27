@@ -1,0 +1,62 @@
+package org.hyperscala.amcharts
+
+import org.powerscala.Color
+
+/**
+ * @author Matt Hicks <matt@outr.com>
+ */
+trait AmRectangularChart[D] extends AmCoordinateChart[D] {
+  lazy val angle = property[Double]("angle", 0.0)
+  lazy val autoMarginOffset = property[Double]("autoMarginOffset", 10.0)
+  lazy val autoMargins = property[Boolean]("autoMargins", true)
+  lazy val chartCursor = property[ChartCursor]("chartCursor", null)
+  object chartScrollbar {
+    lazy val autoGridCount = property("chartScrollbar.autoGridCount", false)
+    lazy val backgroundAlpha = property("chartScrollbar.backgroundAlpha", 1.0)
+    lazy val backgroundColor = property("chartScrollbar.backgroundColor", Color("#d4d4d4"))
+    lazy val categoryAxis = property[CategoryAxis]("chartScrollbar.categoryAxis", null)
+    lazy val color = property("chartScrollbar.color", Color.White)
+    lazy val dragIconHeight = property("chartScrollbar.dragIconHeight", 25)
+    lazy val dragIconWidth = property("chartScrollbar.dragIconWidth", 18)
+    lazy val graph = property[AmGraph]("chartScrollbar.graph", null)
+    lazy val graphFillAlpha = property("chartScrollbar.graphFillAlpha", 1.0)
+    lazy val graphFillColor = property("chartScrollbar.graphFillColor", Color("#bbbbbb"))
+    lazy val graphLineAlpha = property("chartScrollbar.graphLineAlpha", 0.0)
+    lazy val graphLineColor = property("chartScrollbar.graphLineColor", Color("#bbbbbb"))
+    lazy val graphType = property("chartScrollbar.graphType", null)
+    lazy val gridAlpha = property("chartScrollbar.gridAlpha", 0.7)
+    lazy val gridColor = property("chartScrollbar.gridColor", Color.White)
+    lazy val gridCount = property("chartScrollbar.gridCount", 0)
+    lazy val hideResizeGrips = property("chartScrollbar.hideResizeGrips", false)
+    lazy val maximum = property("chartScrollbar.maximum", 0.0)
+    lazy val minimum = property("chartScrollbar.minimum", 0.0)
+    lazy val offset = property("chartScrollbar.offset", 0.0)
+    lazy val resizeEnabled = property("chartScrollbar.resizeEnabled", true)
+    lazy val scrollbarHeight = property("chartScrollbar.scrollbarHeight", 20.0)
+    lazy val scrollDuration = property("chartScrollbar.scrollDuration", 1.0)
+    lazy val selectedBackgroundAlpha = property("chartScrollbar.selectedBackgroundAlpha", 1.0)
+    lazy val selectedBackgroundColor = property("chartScrollbar.selectedBackgroundColor", Color("#efefef"))
+    lazy val selectedGraphFillAlpha = property("chartScrollbar.selectedGraphFillAlpha", 1.0)
+    lazy val selectedGraphFillColor = property("chartScrollbar.selectedGraphFillColor", Color("#efefef"))
+    lazy val selectedGraphLineAlpha = property("chartScrollbar.selectedGraphLineAlpha", 0.0)
+    lazy val selectedGraphLineColor = property("chartScrollbar.selectedGraphLineColor", Color("#888888"))
+    lazy val updateOnReleaseOnly = property("chartScrollbar.updateOnReleaseOnly", false)
+  }
+  lazy val depth3D = property("depth3D", 0.0)
+  lazy val marginBottom = property("marginBottom", 20.0)
+  lazy val marginLeft = property("marginLeft", 20.0)
+  lazy val marginRight = property("marginRight", 20.0)
+  lazy val marginTop = property("marginTop", 20.0)
+  lazy val plotAreaBorderAlpha = property("plotAreaBorderAlpha", 0.0)
+  lazy val plotAreaBorderColor = property("plotAreaBorderColor", Color.Black)
+  lazy val plotAreaFillAlphas = property("plotAreaFillAlphas", 0.0)
+  lazy val plotAreaFillColors = property("plotAreaFillColors", Color.White)
+  lazy val plotAreaGradientAngle = property("plotAreaGradientAngle", 0.0)
+  lazy val zoomOutButtonAlpha = property("zoomOutButtonAlpha", 0.0)
+  lazy val zoomOutButtonColor = property("zoomOutButtonColor", Color("#e5e5e5"))
+  lazy val zoomOutButtonImage = property("zoomOutButtonImage", "lens.png")
+  lazy val zoomOutButtonImageSize = property("zoomOutButtonImageSize", 17)
+  lazy val zoomOutButtonPadding = property("zoomOutButtonPadding", 8)
+  lazy val zoomOutButtonRollOverAlpha = property("zoomOutButtonRollOverAlpha", 1.0)
+  lazy val zoomOutText = property("zoomOutText", "Show all")
+}
