@@ -13,7 +13,7 @@ import org.hyperscala.web.{Website, Webpage}
  */
 object AmCharts extends Module {
   val name = "amcharts"
-  val version = Version(3, 4, 10)
+  val version = Version(3, 9, 0)
 
   override def init[S <: Session](website: Website[S]) = {
     website.addClassPath("/amcharts", "amcharts")

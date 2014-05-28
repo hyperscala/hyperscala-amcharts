@@ -3,7 +3,7 @@ AmCharts.themes.light = {
 	themeName:"light",
 
 	AmChart: {
-		color: "#000000", backgroundColor: "#FFFFFF"
+		color: "#000000"
 	},
 
 	AmCoordinateChart: {
