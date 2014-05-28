@@ -3,6 +3,7 @@ package org.hyperscala.amcharts
 import org.powerscala.Color
 import org.hyperscala.javascript.dsl.JSFunction1
 import org.hyperscala.javascript.JSObjectWithDefault
+import org.powerscala.reflect.CaseValue
 
 /**
  * @author Matt Hicks <matt@outr.com>
@@ -95,6 +96,11 @@ case class AmGraph(alphaField: Option[String] = None,
                    yAxis: ValueAxis = ValueAxis(),
                    yField: Option[String] = None) extends JSObjectWithDefault {
   override def default = AmGraph.Default
+
+  override protected def fieldName(cv: CaseValue) = cv.name match {
+    case "graphType" => Some("type")
+    case _ => super.fieldName(cv)
+  }
 }
 
 object AmGraph {
