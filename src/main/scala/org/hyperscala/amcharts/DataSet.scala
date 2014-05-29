@@ -9,11 +9,11 @@ import org.powerscala.Color
 case class DataSet[D](categoryField: Option[String] = None,
                       color: Option[Color] = None,
                       compared: Boolean = false,
-                      dataProvider: Seq[D] = Nil,
-                      fieldMappings: Seq[FieldMapping] = Nil,
+                      dataProvider: List[D] = Nil,
+                      fieldMappings: List[FieldMapping] = Nil,
                       showInCompare: Boolean = true,
                       showInSelect: Boolean = true,
-                      stockEvents: Seq[StockEvent] = Nil,
+                      stockEvents: List[StockEvent] = Nil,
                       title: Option[String] = None) extends JSObjectWithDefault {
   def default = DataSet.Default
 }

@@ -5,16 +5,19 @@ import org.hyperscala.html._
 import org.hyperscala.javascript.JavaScriptContent
 import org.hyperscala.realtime.Realtime
 import org.hyperscala.selector.Selector
-import org.powerscala.Color
+import org.powerscala.{Unique, Color}
+import org.powerscala.property.Property
 
 /**
  * @author Matt Hicks <matt@outr.com>
  */
-trait AmChart[D] extends WrappedComponent[tag.Div] {
+trait AmChart[D] extends WrappedComponent[tag.Div] with JavaScriptContent {
   protected def chartType: String
 
+  val id = Unique()
   val autoInit = false
   implicit def manifest: Manifest[D]
+  val writeTag = Property[Boolean](default = Some(true))
 
   lazy val allLabels = property[List[Label]]("allLabels", Nil)
   object amExport {
@@ -79,32 +82,37 @@ trait AmChart[D] extends WrappedComponent[tag.Div] {
 
   override protected def initializeComponent(values: Map[String, Any]) = {
     val b = new StringBuilder
+    b.append("if (window.charts == null) window.charts = {};\r\n")
     b.append(s"var chart = new AmCharts.$chartType();\r\n")
     values.foreach {
       case (key, value) => {
         b.append(s"chart.${key} = ${JavaScriptContent.toJS(value)};\r\n")
       }
     }
-    val id = wrapped.identity
-    b.append(s"$$('#$id').data('chart', chart);\r\n")
-    b.append(s"""chart.write("$id");\r\n""")
-    println(s"Sending: $b")
-    Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(id)))
+    val tagId = wrapped.identity
+    b.append(s"window.charts['$id'] = chart;\r\n")
+    if (writeTag()) {
+      b.append( s"""chart.write("$tagId");\r\n""")
+    }
+//    println(s"Sending: $b")
+    Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(tagId)))
   }
 
   override protected def modify(key: String, value: Any) = {
-    val script = s"""$$('#${wrapped.identity}').data('chart').$key = ${JavaScriptContent.toJS(value)};"""
+    val script = s"""window.charts['$id'].$key = ${JavaScriptContent.toJS(value)};"""
     val js = if (key == "dataProvider") {
-      s"$script $$('#${wrapped.identity}').data('chart').validateData();"
+      s"$script window.charts['$id'].validateData();"
     } else {
       script
     }
     Realtime.sendJavaScript(webpage, js, onlyRealtime = false, selector = Some(Selector.id(wrapped)))
   }
+
+  override def content = s"window.charts['$id']"
 }
 
 object AmChart {
-  def apply[D](chart: AmChart[D]) = {
+  def apply[C <: AmChart[_]](chart: C) = {
     chart.init()
     chart
   }

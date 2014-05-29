@@ -20,6 +20,7 @@ object AmCharts extends Module {
   }
 
   override def load[S <: Session](webpage: Webpage[S]) = {
+    webpage.head.contents += new tag.Link(href = "/amcharts/style.css")
     webpage.head.contents += new tag.Script(src = "/amcharts/amcharts.js")
   }
 
