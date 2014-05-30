@@ -6,7 +6,7 @@ import org.hyperscala.html._
  * @author Matt Hicks <matt@outr.com>
  */
 class AmPieChart[D](val wrapped: tag.Div)(implicit val manifest: Manifest[D]) extends AmSlicedChart[D] {
-  def chartType = "AmPieChart"
+  def typeName = "pie"
 
   lazy val angle = property[Double]("angle", 0.0)
   lazy val balloonText = property[String]("balloonText", "[[title]]: [[percents]]% ([[value]])[[description]]")

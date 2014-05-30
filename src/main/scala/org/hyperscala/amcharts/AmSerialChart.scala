@@ -7,7 +7,7 @@ import java.util.Date
  * @author Matt Hicks <matt@outr.com>
  */
 class AmSerialChart[D](val wrapped: tag.Div)(implicit val manifest: Manifest[D]) extends AmRectangularChart[D] {
-  def chartType = "AmSerialChart"
+  def typeName = "serial"
 
   lazy val balloonDateFormat = property("balloonDateFormat", "MMM DD, YYYY")
   lazy val categoryAxis = property[CategoryAxis]("categoryAxis", null)

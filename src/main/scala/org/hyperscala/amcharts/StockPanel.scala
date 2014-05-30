@@ -3,14 +3,15 @@ package org.hyperscala.amcharts
 import org.hyperscala.html._
 import java.util.Date
 import org.powerscala.Color
+import org.hyperscala.javascript.JavaScriptContent
+import org.hyperscala.realtime.Realtime
+import org.hyperscala.selector.Selector
 
 /**
  * @author Matt Hicks <matt@outr.com>
  */
 class StockPanel[D](wrapped: tag.Div)(implicit manifest: Manifest[D]) extends AmSerialChart[D](wrapped) {
-  override def chartType = "StockPanel"
-
-  writeTag := false     // Don't write this tag out
+  override def typeName = "StockPanel"
 
   lazy val allowTurningOff = property("allowTurningOff", false)
   lazy val drawingIconsEnabled = property("drawingIconsEnabled", false)
@@ -29,4 +30,20 @@ class StockPanel[D](wrapped: tag.Div)(implicit manifest: Manifest[D]) extends Am
   lazy val trendLineColor = property("trendLineColor", Color("#00cc00"))
   lazy val trendLineDashLength = property("trendLineDashLength", 0.0)
   lazy val trendLineThickness = property("trendLineThicksness", 2.0)
+
+  override protected def initializeComponent(values: Map[String, Any]) = {
+    AmCharts.verifySerial(webpage)
+
+    val b = new StringBuilder
+    b.append("if (window.charts == null) window.charts = {};\r\n")
+    b.append(s"var chart = new AmCharts.$typeName();\r\n")
+    values.foreach {
+      case (key, value) => {
+        b.append(s"chart.${key} = ${JavaScriptContent.toJS(value)};\r\n")
+      }
+    }
+    val tagId = wrapped.identity
+    b.append(s"window.charts['$id'] = chart;\r\n")
+    Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(tagId)))
+  }
 }

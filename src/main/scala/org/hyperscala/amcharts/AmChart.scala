@@ -12,12 +12,11 @@ import org.powerscala.property.Property
  * @author Matt Hicks <matt@outr.com>
  */
 trait AmChart[D] extends WrappedComponent[tag.Div] with JavaScriptContent {
-  protected def chartType: String
+  protected def typeName: String
 
   val id = Unique()
   val autoInit = false
   implicit def manifest: Manifest[D]
-  val writeTag = Property[Boolean](default = Some(true))
 
   lazy val allLabels = property[List[Label]]("allLabels", Nil)
   object amExport {
@@ -80,20 +79,19 @@ trait AmChart[D] extends WrappedComponent[tag.Div] with JavaScriptContent {
   lazy val titles = property[List[Title]]("titles", Nil)
   lazy val usePrefixes = property[Boolean]("usePrefixes", false)
 
+  val delay = Property[Double](default = Some(0.0))
+
   override protected def initializeComponent(values: Map[String, Any]) = {
     val b = new StringBuilder
-    b.append("if (window.charts == null) window.charts = {};\r\n")
-    b.append(s"var chart = new AmCharts.$chartType();\r\n")
-    values.foreach {
-      case (key, value) => {
-        b.append(s"chart.${key} = ${JavaScriptContent.toJS(value)};\r\n")
-      }
-    }
     val tagId = wrapped.identity
-    b.append(s"window.charts['$id'] = chart;\r\n")
-    if (writeTag()) {
-      b.append( s"""chart.write("$tagId");\r\n""")
-    }
+    val delayLong = math.round(delay() * 1000.0)
+    b.append("if (window.charts == null) window.charts = {};\r\n")
+    b.append(s"window.charts['$id'] = AmCharts.makeChart('$tagId', {\r\n")
+    b.append(s"  'type': '$typeName',\r\n")
+    b.append(values.map {
+      case (key, value) => s"  '$key': ${JavaScriptContent.toJS(value)}"
+    }.mkString(",\r\n"))
+    b.append(s"\r\n}, $delayLong);")
 //    println(s"Sending: $b")
     Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(tagId)))
   }
