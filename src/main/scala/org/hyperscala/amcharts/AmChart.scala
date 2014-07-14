@@ -107,6 +107,10 @@ trait AmChart[D] extends WrappedComponent[tag.Div] with JavaScriptContent {
   }
 
   override def content = s"window.charts['$id']"
+
+  def validateData() = Realtime.sendJavaScript(webpage, s"window.charts['$id'].validateData();", onlyRealtime = false, selector = Some(Selector.id(wrapped)))
+
+  def validateNow() = Realtime.sendJavaScript(webpage, s"window.charts['$id'].validateNow();", onlyRealtime = false, selector = Some(Selector.id(wrapped)))
 }
 
 object AmChart {
