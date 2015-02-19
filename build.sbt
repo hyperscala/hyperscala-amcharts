@@ -2,7 +2,7 @@ name := "hyperscala-amcharts"
 
 organization := "org.hyperscala"
 
-version := "1.0"
+version := "0.10.0-SNAPSHOT"
 
 scalaVersion := "2.11.5"
 
