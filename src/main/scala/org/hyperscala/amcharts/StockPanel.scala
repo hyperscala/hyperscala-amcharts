@@ -4,7 +4,7 @@ import org.hyperscala.html._
 import java.util.Date
 import org.powerscala.Color
 import org.hyperscala.javascript.JavaScriptContent
-import org.hyperscala.realtime.Realtime
+import org.hyperscala.javascript.dsl._
 import org.hyperscala.selector.Selector
 
 /**
@@ -44,6 +44,6 @@ class StockPanel[D](wrapped: tag.Div)(implicit manifest: Manifest[D]) extends Am
     }
     val tagId = wrapped.identity
     b.append(s"window.charts['$id'] = chart;\r\n")
-    Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(tagId)))
+    webpage.eval(b.toString(), Some(Selector.id(tagId).toCondition))
   }
 }

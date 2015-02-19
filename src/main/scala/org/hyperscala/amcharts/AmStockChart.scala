@@ -1,8 +1,7 @@
 package org.hyperscala.amcharts
 
 import org.hyperscala.html._
-import org.hyperscala.javascript.JavaScriptContent
-import org.hyperscala.realtime.Realtime
+import org.hyperscala.javascript.dsl._
 import org.hyperscala.selector.Selector
 
 /**
@@ -29,7 +28,7 @@ class AmStockChart[D](val wrapped: tag.Div)(implicit val manifest: Manifest[D]) 
   }
 
   override def validateData() = {     // Work-around to make sure the chart updates
-    Realtime.sendJavaScript(webpage, s"window.charts['$id'].mainDataSet = window.charts['$id'].dataSets[0];", onlyRealtime = false, selector = Some(Selector.id(wrapped)))
+    webpage.eval(s"window.charts['$id'].mainDataSet = window.charts['$id'].dataSets[0];", Some(Selector.id(wrapped).toCondition))
     super.validateData()
   }
 }

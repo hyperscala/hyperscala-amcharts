@@ -3,7 +3,7 @@ package org.hyperscala.amcharts
 import org.hyperscala.web.WrappedComponent
 import org.hyperscala.html._
 import org.hyperscala.javascript.JavaScriptContent
-import org.hyperscala.realtime.Realtime
+import org.hyperscala.javascript.dsl._
 import org.hyperscala.selector.Selector
 import org.powerscala.{Unique, Color}
 import org.powerscala.property.Property
@@ -93,7 +93,7 @@ trait AmChart[D] extends WrappedComponent[tag.Div] with JavaScriptContent {
     }.mkString(",\r\n"))
     b.append(s"\r\n}, $delayLong);")
 //    println(s"Sending: $b")
-    Realtime.sendJavaScript(webpage, b.toString(), onlyRealtime = false, selector = Some(Selector.id(tagId)))
+    webpage.eval(b.toString(), Some(Selector.id(tagId).toCondition))
   }
 
   override protected def modify(key: String, value: Any) = {
@@ -103,14 +103,14 @@ trait AmChart[D] extends WrappedComponent[tag.Div] with JavaScriptContent {
     } else {
       script
     }
-    Realtime.sendJavaScript(webpage, js, onlyRealtime = false, selector = Some(Selector.id(wrapped)))
+    webpage.eval(js, Some(Selector.id(wrapped).toCondition))
   }
 
   override def content = s"window.charts['$id']"
 
-  def validateData() = Realtime.sendJavaScript(webpage, s"window.charts['$id'].validateData();", onlyRealtime = false, selector = Some(Selector.id(wrapped)))
+  def validateData() = webpage.eval(s"window.charts['$id'].validateData();", Some(Selector.id(wrapped).toCondition))
 
-  def validateNow() = Realtime.sendJavaScript(webpage, s"window.charts['$id'].validateNow();", onlyRealtime = false, selector = Some(Selector.id(wrapped)))
+  def validateNow() = webpage.eval(s"window.charts['$id'].validateNow();", Some(Selector.id(wrapped).toCondition))
 }
 
 object AmChart {
