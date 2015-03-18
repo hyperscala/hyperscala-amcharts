@@ -10,7 +10,7 @@ import org.powerscala.Color
 /**
  * @author Matt Hicks <matt@outr.com>
  */
-class PieSimplePage extends Webpage(AmChartsExampleSite) {
+class PieSimplePage extends Webpage {
   require(Realtime)
   require(AmCharts)
 

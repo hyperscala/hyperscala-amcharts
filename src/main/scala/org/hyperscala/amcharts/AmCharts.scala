@@ -15,22 +15,22 @@ object AmCharts extends Module {
   val name = "amcharts"
   val version = Version(3, 9, 0)
 
-  override def init[S <: Session](website: Website[S]) = {
+  override def init(website: Website) = {
     website.addClassPath("/amcharts", "amcharts")
   }
 
-  override def load[S <: Session](webpage: Webpage[S]) = {
+  override def load(webpage: Webpage) = {
     webpage.head.contents += new tag.Link(href = "/amcharts/style.css")
     webpage.head.contents += new tag.Script(src = "/amcharts/amcharts.js")
   }
 
-  def verifyPie[S <: Session](webpage: Webpage[S]) = verifyScript(webpage, "pie")
-  def verifySerial[S <: Session](webpage: Webpage[S]) = verifyScript(webpage, "serial")
-  def verifyStock[S <: Session](webpage: Webpage[S]) = verifyScript(webpage, "amstock")
+  def verifyPie(webpage: Webpage) = verifyScript(webpage, "pie")
+  def verifySerial(webpage: Webpage) = verifyScript(webpage, "serial")
+  def verifyStock(webpage: Webpage) = verifyScript(webpage, "amstock")
 
-  private def verifyScript[S <: Session](webpage: Webpage[S], name: String) = if (!hasScript(webpage, name)) {
+  private def verifyScript(webpage: Webpage, name: String) = if (!hasScript(webpage, name)) {
     webpage.head.contents += new tag.Script(src = s"/amcharts/$name.js")
   }
 
-  private def hasScript[S <: Session](webpage: Webpage[S], name: String) = webpage.head.byTag[tag.Script].find(s => s.src() == s"/amcharts/$name.js").nonEmpty
+  private def hasScript(webpage: Webpage, name: String) = webpage.head.byTag[tag.Script].find(s => s.src() == s"/amcharts/$name.js").nonEmpty
 }

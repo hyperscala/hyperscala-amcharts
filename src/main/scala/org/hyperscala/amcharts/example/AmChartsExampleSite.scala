@@ -8,7 +8,9 @@ import com.outr.net.http.request.HttpRequest
 /**
  * @author Matt Hicks <matt@outr.com>
  */
-object AmChartsExampleSite extends Website[MapSession] with JettyApplication {
+object AmChartsExampleSite extends Website with JettyApplication {
+  override type S = MapSession
+
   val pieSimple = page(new PieSimplePage, Scope.Page, "/pieSimple.html")
   val lineSimple = page(new LineSimplePage, Scope.Page, "/lineSimple.html")
   val barSimple = page(new BarSimplePage, Scope.Page, "/barSimple.html")

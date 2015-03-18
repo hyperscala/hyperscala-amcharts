@@ -11,7 +11,7 @@ import scala.Some
 /**
  * @author Matt Hicks <matt@outr.com>
  */
-class LineSimplePage extends Webpage(AmChartsExampleSite) {
+class LineSimplePage extends Webpage {
   require(Realtime)
   require(AmCharts)
 

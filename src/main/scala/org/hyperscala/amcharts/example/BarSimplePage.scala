@@ -11,7 +11,7 @@ import org.hyperscala.javascript.JSObject
 /**
  * @author Matt Hicks <matt@outr.com>
  */
-class BarSimplePage extends Webpage(AmChartsExampleSite) {
+class BarSimplePage extends Webpage {
   require(Realtime)
   require(AmCharts)
 
